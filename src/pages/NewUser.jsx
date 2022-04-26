@@ -52,15 +52,13 @@ export default function NewUser() {
   
   const [rePasswordError, setrePasswordError] = useState("");
   const [usernameError, setusernameError] = useState("");
-  const [passwordError, setpasswordError] = useState("");
-  const [emailError, setemailError] = useState("");
   const [nameError, setnameError] = useState("");
   const [surnameError, setsurnameError] = useState("");
   async function addNewUser() {
-    setusernameError("");
-    setemailError("");
     setrePasswordError("");
-    setpasswordError("");
+    setusernameError("");
+    setnameError("");
+    setsurnameError("");
     let fItems = { username, password, rePassword, name, surname, adress, phone, email, website }
     let result = await fetch("http://localhost:8080/api/users/adduser",{
        method: 'POST', 
@@ -83,15 +81,10 @@ export default function NewUser() {
             setrePasswordError(data.errors[i].value);
             if(data.errors[i].name==="username") 
             setusernameError(data.errors[i].value);
-            if(data.errors[i].name==="password") 
-            setpasswordError(data.errors[i].value);
-            if(data.errors[i].name==="email") 
-            setemailError(data.errors[i].value);
             if(data.errors[i].name==="name") 
             setnameError(data.errors[i].value);
             if(data.errors[i].name==="surname") 
-            setsurnameError(data.errors[i].value);
-            
+            setnameError(data.errors[i].value);
         }
        }
   }
@@ -127,9 +120,8 @@ export default function NewUser() {
               type="password"
               value={password}
               onChange={(e) => setPasword(e.target.value)}
-
             />
-                   <div style={{color:"red"}}>{passwordError}</div>
+
             <TextField variant="outlined" margin="normal" required fullWidth
               id="rePassword"
               label="Şifrenizi Tekrar girin."
@@ -148,6 +140,7 @@ export default function NewUser() {
               onChange={(e) => setName(e.target.value)}
             />
             <div style={{color:"red"}}>{nameError}</div>
+ 
             <TextField variant="outlined" margin="normal" required fullWidth
               id="surname" label="Soyadınız" name="surname"
               value={surname}
@@ -169,7 +162,6 @@ export default function NewUser() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <div style={{color:"red"}}>{emailError}</div>
             <TextField variant="outlined" margin="normal" fullWidth
               id="website" label="Kişisel Web Sayfanız" name="website"
               value={website}
